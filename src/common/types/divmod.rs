@@ -1,6 +1,4 @@
-
 use num_bigint::{BigInt, ToBigInt};
-
 
 pub fn divmod(a: BigInt, b: BigInt) -> (BigInt, BigInt) {
     let d = a.clone() / b.clone();

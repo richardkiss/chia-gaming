@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-
 use crate::common::types::coin_string::CoinString;
 use crate::common::types::private_key::Aggsig;
 use crate::common::types::program::{Program, ProgramRef, Puzzle};
