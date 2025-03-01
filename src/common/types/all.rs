@@ -1,4 +1,3 @@
-use std::ops::Add;
 
 use log::debug;
 
@@ -17,7 +16,7 @@ use crate::common::constants::{AGG_SIG_ME_ATOM, AGG_SIG_UNSAFE_ATOM, CREATE_COIN
 
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 
-use crate::common::types::coin_id::{atom_from_clvm, AllocEncoder, Hash};
+use crate::common::types::coin_id::{AllocEncoder, Hash};
 use crate::common::types::coin_string::{u64_from_atom, Amount, CoinString, PuzzleHash};
 use crate::common::types::error::{Error, IntoErr};
 use crate::common::types::private_key::{Aggsig, PublicKey};
@@ -47,41 +46,6 @@ impl Node {
 impl<E: ClvmEncoder<Node = NodePtr>> ToClvm<E> for Node {
     fn to_clvm(&self, _encoder: &mut E) -> Result<<E as ClvmEncoder>::Node, ToClvmError> {
         Ok(self.0)
-    }
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
-pub struct Timeout(u64);
-
-impl Timeout {
-    pub fn new(t: u64) -> Self {
-        Timeout(t)
-    }
-
-    pub fn to_u64(&self) -> u64 {
-        self.0
-    }
-
-    pub fn from_clvm(allocator: &mut AllocEncoder, clvm: NodePtr) -> Result<Self, Error> {
-        if let Some(amt) = atom_from_clvm(allocator, clvm).and_then(|a| u64_from_atom(&a)) {
-            Ok(Timeout::new(amt))
-        } else {
-            Err(Error::StrErr("bad timeout".to_string()))
-        }
-    }
-}
-
-impl Add for Timeout {
-    type Output = Timeout;
-
-    fn add(self, rhs: Self) -> Timeout {
-        Timeout::new(self.0 + rhs.0)
-    }
-}
-
-impl<E: ClvmEncoder<Node = NodePtr>> ToClvm<E> for Timeout {
-    fn to_clvm(&self, encoder: &mut E) -> Result<<E as ClvmEncoder>::Node, ToClvmError> {
-        self.0.to_clvm(encoder)
     }
 }
 
