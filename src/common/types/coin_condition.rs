@@ -14,7 +14,7 @@ use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 use crate::common::types::coin_id::{AllocEncoder, Hash};
 use crate::common::types::coin_string::{u64_from_atom, Amount, PuzzleHash};
 use crate::common::types::error::{Error, IntoErr};
-use crate::common::types::private_key::PublicKey;
+use crate::common::types::public_key::PublicKey;
 use crate::common::types::program::Program;
 
 pub fn chia_dialect() -> ChiaDialect {
