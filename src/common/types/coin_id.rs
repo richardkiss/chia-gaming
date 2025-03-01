@@ -3,6 +3,9 @@ use serde::{Deserialize, Serialize};
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 use clvmr::allocator::{NodePtr, SExp};
 use clvmr::Allocator;
+use rand::distributions::Standard;
+use rand::prelude::Distribution;
+use rand::Rng;
 
 use crate::common::types::error::Error;
 
@@ -58,6 +61,30 @@ pub enum Sha256Input<'a> {
     Hashed(Vec<Sha256Input<'a>>),
     Hash(&'a Hash),
     Array(Vec<Sha256Input<'a>>),
+}
+
+impl Distribution<Hash> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> Hash {
+        let mut pk = [0; 32];
+        for item in &mut pk {
+            *item = rng.gen();
+        }
+        Hash::from_bytes(pk)
+    }
+}
+
+impl<E: ClvmEncoder<Node = NodePtr>> ToClvm<E> for Hash {
+    fn to_clvm(&self, encoder: &mut E) -> Result<<E as ClvmEncoder>::Node, ToClvmError> {
+        encoder.encode_atom(clvm_traits::Atom::Borrowed(&self.0))
+    }
+}
+
+impl std::fmt::Debug for Hash {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+        write!(formatter, "Hash(")?;
+        write!(formatter, "{}", hex::encode(self.0))?;
+        write!(formatter, ")")
+    }
 }
 
 impl Sha256Input<'_> {

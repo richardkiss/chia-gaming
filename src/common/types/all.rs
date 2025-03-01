@@ -8,9 +8,6 @@ use serde::{Deserialize, Serialize};
 
 use num_bigint::{BigInt, ToBigInt};
 
-use rand::distributions::Standard;
-use rand::prelude::*;
-
 use clvmr::allocator::{NodePtr, SExp};
 use clvmr::serde::node_to_bytes;
 use clvmr::Allocator;
@@ -30,30 +27,6 @@ use crate::common::types::program::{Program, ProgramRef, Puzzle};
 
 pub fn chia_dialect() -> ChiaDialect {
     ChiaDialect::new(NO_UNKNOWN_OPS)
-}
-
-impl Distribution<Hash> for Standard {
-    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> Hash {
-        let mut pk = [0; 32];
-        for item in &mut pk {
-            *item = rng.gen();
-        }
-        Hash::from_bytes(pk)
-    }
-}
-
-impl<E: ClvmEncoder<Node = NodePtr>> ToClvm<E> for Hash {
-    fn to_clvm(&self, encoder: &mut E) -> Result<<E as ClvmEncoder>::Node, ToClvmError> {
-        encoder.encode_atom(clvm_traits::Atom::Borrowed(&self.0))
-    }
-}
-
-impl std::fmt::Debug for Hash {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
-        write!(formatter, "Hash(")?;
-        write!(formatter, "{}", hex::encode(self.0))?;
-        write!(formatter, ")")
-    }
 }
 
 #[derive(Clone, Debug)]
