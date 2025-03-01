@@ -1,12 +1,8 @@
 use std::ops::Add;
 
-
 use serde::{Deserialize, Serialize};
 
-
 use clvmr::allocator::NodePtr;
-
-
 
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 
