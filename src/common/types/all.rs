@@ -1,5 +1,4 @@
 use std::borrow::Borrow;
-use std::io;
 use std::ops::Add;
 use std::rc::Rc;
 
@@ -13,7 +12,6 @@ use rand::distributions::Standard;
 use rand::prelude::*;
 
 use clvmr::allocator::{NodePtr, SExp};
-use clvmr::reduction::EvalErr;
 use clvmr::serde::node_to_bytes;
 use clvmr::Allocator;
 use clvmr::{run_program, ChiaDialect, NO_UNKNOWN_OPS};
@@ -22,12 +20,11 @@ use crate::utils::proper_list;
 
 use crate::common::constants::{AGG_SIG_ME_ATOM, AGG_SIG_UNSAFE_ATOM, CREATE_COIN_ATOM, REM_ATOM};
 
-use chia_bls;
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 
 use crate::common::types::coin_id::{atom_from_clvm, AllocEncoder, Hash};
 use crate::common::types::coin_string::{u64_from_atom, Amount, CoinString, PuzzleHash};
-use crate::common::types::error::Error;
+use crate::common::types::error::{Error, IntoErr};
 use crate::common::types::private_key::{Aggsig, PublicKey};
 use crate::common::types::program::{Program, ProgramRef, Puzzle};
 
@@ -114,71 +111,6 @@ impl Add for Timeout {
 impl<E: ClvmEncoder<Node = NodePtr>> ToClvm<E> for Timeout {
     fn to_clvm(&self, encoder: &mut E) -> Result<<E as ClvmEncoder>::Node, ToClvmError> {
         self.0.to_clvm(encoder)
-    }
-}
-
-pub trait ErrToError {
-    fn into_gen(self) -> Error;
-}
-
-impl ErrToError for EvalErr {
-    fn into_gen(self) -> Error {
-        Error::ClvmErr(self)
-    }
-}
-
-impl ErrToError for io::Error {
-    fn into_gen(self) -> Error {
-        Error::IoErr(self)
-    }
-}
-
-impl ErrToError for String {
-    fn into_gen(self) -> Error {
-        Error::StrErr(self)
-    }
-}
-
-impl ErrToError for chia_bls::Error {
-    fn into_gen(self) -> Error {
-        Error::BlsErr(self)
-    }
-}
-
-impl ErrToError for ToClvmError {
-    fn into_gen(self) -> Error {
-        Error::EncodeErr(self)
-    }
-}
-
-impl ErrToError for bson::de::Error {
-    fn into_gen(self) -> Error {
-        Error::BsonErr(self)
-    }
-}
-
-impl ErrToError for serde_json::Error {
-    fn into_gen(self) -> Error {
-        Error::JsonErr(self)
-    }
-}
-
-impl ErrToError for hex::FromHexError {
-    fn into_gen(self) -> Error {
-        Error::HexErr(self)
-    }
-}
-
-pub trait IntoErr<X> {
-    fn into_gen(self) -> Result<X, Error>;
-}
-
-impl<X, E> IntoErr<X> for Result<X, E>
-where
-    E: ErrToError,
-{
-    fn into_gen(self) -> Result<X, Error> {
-        self.map_err(|e| e.into_gen())
     }
 }
 

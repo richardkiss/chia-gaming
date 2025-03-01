@@ -12,9 +12,9 @@ use chia_bls;
 use chia_bls::signature::{sign, verify};
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 
-use crate::common::types::all::IntoErr;
 use crate::common::types::coin_id::Hash;
 use crate::common::types::error::Error;
+use crate::common::types::IntoErr;
 
 /// Public key
 #[derive(Clone, Eq, PartialEq, Debug, Default)]
