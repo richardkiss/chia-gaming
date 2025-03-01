@@ -26,14 +26,14 @@ use chia_bls;
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 use clvm_utils::tree_hash;
 
-pub fn chia_dialect() -> ChiaDialect {
-    ChiaDialect::new(NO_UNKNOWN_OPS)
-}
-
 use crate::common::types::coin_id::{atom_from_clvm, AllocEncoder, Hash};
 use crate::common::types::coin_string::{u64_from_atom, Amount, CoinString, PuzzleHash};
 use crate::common::types::error::Error;
 use crate::common::types::private_key::{Aggsig, PublicKey};
+
+pub fn chia_dialect() -> ChiaDialect {
+    ChiaDialect::new(NO_UNKNOWN_OPS)
+}
 
 impl Distribution<Hash> for Standard {
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> Hash {
@@ -56,22 +56,6 @@ impl std::fmt::Debug for Hash {
         write!(formatter, "Hash(")?;
         write!(formatter, "{}", hex::encode(self.0))?;
         write!(formatter, ")")
-    }
-}
-#[derive(Serialize, Deserialize)]
-struct SerializedError {
-    error: String,
-}
-
-impl Serialize for Error {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        SerializedError {
-            error: format!("{self:?}"),
-        }
-        .serialize(serializer)
     }
 }
 
