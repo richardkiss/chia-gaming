@@ -11,7 +11,8 @@ use rand::prelude::*;
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 use clvmr::allocator::NodePtr;
 
-use crate::common::types::coin_id::{atom_from_clvm, AllocEncoder, CoinID, Hash};
+use crate::common::types::amount::Amount;
+use crate::common::types::coin_id::{AllocEncoder, CoinID, Hash};
 use crate::common::types::error::Error;
 
 pub fn usize_from_atom(a: &[u8]) -> Option<usize> {
