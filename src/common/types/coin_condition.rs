@@ -1,48 +1,18 @@
 use log::debug;
 
 use clvmr::allocator::{NodePtr, SExp};
-use clvmr::serde::node_to_bytes;
-use clvmr::Allocator;
 use clvmr::{run_program, ChiaDialect, NO_UNKNOWN_OPS};
 
 use crate::utils::proper_list;
 
 use crate::common::constants::{AGG_SIG_ME_ATOM, AGG_SIG_UNSAFE_ATOM, CREATE_COIN_ATOM, REM_ATOM};
 
-use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
-
-use crate::common::types::amount::Amount;
-use crate::common::types::coin_id::{AllocEncoder, Hash};
-use crate::common::types::coin_string::{u64_from_atom, PuzzleHash};
-use crate::common::types::error::{Error, IntoErr};
-use crate::common::types::program::Program;
-use crate::common::types::public_key::PublicKey;
+use crate::common::types::{
+    u64_from_atom, AllocEncoder, Amount, Error, Hash, IntoErr, Node, Program, PublicKey, PuzzleHash,
+};
 
 pub fn chia_dialect() -> ChiaDialect {
     ChiaDialect::new(NO_UNKNOWN_OPS)
-}
-
-#[derive(Clone, Debug)]
-pub struct Node(pub NodePtr);
-
-impl Default for Node {
-    fn default() -> Node {
-        let allocator = Allocator::new();
-        Node(allocator.nil())
-    }
-}
-
-impl Node {
-    pub fn to_hex(&self, allocator: &mut AllocEncoder) -> Result<String, Error> {
-        let bytes = node_to_bytes(allocator.allocator(), self.0).into_gen()?;
-        Ok(hex::encode(bytes))
-    }
-}
-
-impl<E: ClvmEncoder<Node = NodePtr>> ToClvm<E> for Node {
-    fn to_clvm(&self, _encoder: &mut E) -> Result<<E as ClvmEncoder>::Node, ToClvmError> {
-        Ok(self.0)
-    }
 }
 
 #[derive(Debug, Clone)]
