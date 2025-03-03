@@ -7,26 +7,6 @@ use clvm_traits::ToClvm;
 
 use crate::common::types::{AllocEncoder, Amount, CoinID, Error, Hash as Hash32, PuzzleHash};
 
-pub fn usize_from_atom(a: &[u8]) -> Option<usize> {
-    let bi = BigInt::from_bytes_be(Sign::Plus, a);
-    bi.to_usize()
-}
-
-pub fn i32_from_atom(a: &[u8]) -> Option<i32> {
-    let bi = BigInt::from_signed_bytes_be(a);
-    bi.to_i32()
-}
-
-pub fn i64_from_atom(a: &[u8]) -> Option<i64> {
-    let bi = BigInt::from_signed_bytes_be(a);
-    bi.to_i64()
-}
-
-pub fn u64_from_atom(a: &[u8]) -> Option<u64> {
-    let bi = BigInt::from_bytes_be(Sign::Plus, a);
-    bi.to_u64()
-}
-
 /// Coin String
 #[derive(Default, Clone, Serialize, Deserialize, Eq, PartialEq, Hash)]
 pub struct CoinString(Vec<u8>);
