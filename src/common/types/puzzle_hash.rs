@@ -6,7 +6,7 @@ use rand::prelude::*;
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 use clvmr::allocator::NodePtr;
 
-use crate::common::types::coin_id::Hash;
+use crate::common::types::Hash;
 
 /// Puzzle hash
 #[derive(Default, Clone, Eq, PartialEq, Debug, Serialize, Deserialize, Hash)]

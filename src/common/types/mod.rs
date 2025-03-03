@@ -15,6 +15,7 @@ pub mod public_key;
 pub mod puzzle;
 pub mod puzzle_hash;
 pub mod rc_node;
+pub mod sha256input;
 pub mod spend;
 pub mod timeout;
 
@@ -35,5 +36,6 @@ pub use self::public_key::*;
 pub use self::puzzle::*;
 pub use self::puzzle_hash::*;
 pub use self::rc_node::*;
+pub use self::sha256input::*;
 pub use self::spend::*;
 pub use self::timeout::*;

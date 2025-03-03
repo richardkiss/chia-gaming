@@ -5,7 +5,7 @@ use num_traits::cast::ToPrimitive;
 
 use clvm_traits::ToClvm;
 
-use crate::common::types::{AllocEncoder, Amount, CoinID, Error, Hash, PuzzleHash};
+use crate::common::types::{AllocEncoder, Amount, CoinID, Error, Hash as Hash32, PuzzleHash};
 
 pub fn usize_from_atom(a: &[u8]) -> Option<usize> {
     let bi = BigInt::from_bytes_be(Sign::Plus, a);
@@ -61,8 +61,8 @@ impl CoinString {
             return None;
         }
 
-        let parent_id = CoinID::new(Hash::from_slice(&self.0[..32]));
-        let puzzle_hash = PuzzleHash::from_hash(Hash::from_slice(&self.0[32..64]));
+        let parent_id = CoinID::new(Hash32::from_slice(&self.0[..32]));
+        let puzzle_hash = PuzzleHash::from_hash(Hash32::from_slice(&self.0[32..64]));
         let amount_bytes = &self.0[64..];
         BigInt::from_bytes_be(Sign::Plus, amount_bytes)
             .to_u64()
@@ -70,7 +70,7 @@ impl CoinString {
     }
 
     pub fn to_coin_id(&self) -> CoinID {
-        CoinID(Hash::new(&self.0))
+        CoinID(Hash32::new(&self.0))
     }
 }
 
