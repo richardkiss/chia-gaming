@@ -7,6 +7,7 @@ pub mod error;
 pub mod game_id;
 pub mod private_key;
 pub mod program;
+pub mod program_ref;
 pub mod public_key;
 pub mod rc_node;
 pub mod spend;

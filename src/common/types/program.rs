@@ -13,7 +13,7 @@ use clvm_utils::tree_hash;
 use crate::common::types::coin_id::AllocEncoder;
 use crate::common::types::coin_string::PuzzleHash;
 use crate::common::types::error::Error;
-use crate::common::types::IntoErr;
+use crate::common::types::{IntoErr, program_ref::ProgramRef};
 
 pub trait ToQuotedProgram {
     fn to_quoted_program(&self, allocator: &mut AllocEncoder) -> Result<Program, Error>;
