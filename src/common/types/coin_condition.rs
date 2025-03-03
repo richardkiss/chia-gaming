@@ -11,11 +11,12 @@ use crate::common::constants::{AGG_SIG_ME_ATOM, AGG_SIG_UNSAFE_ATOM, CREATE_COIN
 
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 
+use crate::common::types::amount::Amount;
 use crate::common::types::coin_id::{AllocEncoder, Hash};
-use crate::common::types::coin_string::{u64_from_atom, Amount, PuzzleHash};
+use crate::common::types::coin_string::{u64_from_atom, PuzzleHash};
 use crate::common::types::error::{Error, IntoErr};
-use crate::common::types::public_key::PublicKey;
 use crate::common::types::program::Program;
+use crate::common::types::public_key::PublicKey;
 
 pub fn chia_dialect() -> ChiaDialect {
     ChiaDialect::new(NO_UNKNOWN_OPS)

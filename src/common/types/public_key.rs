@@ -2,7 +2,6 @@ use std::ops::{Add, AddAssign};
 
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-
 use clvmr::allocator::NodePtr;
 
 use chia_bls;

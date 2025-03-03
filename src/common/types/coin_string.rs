@@ -1,5 +1,3 @@
-use std::ops::{Add, AddAssign, Sub, SubAssign};
-
 use serde::{Deserialize, Serialize};
 
 use num_bigint::{BigInt, Sign};
@@ -34,7 +32,6 @@ pub fn u64_from_atom(a: &[u8]) -> Option<u64> {
     let bi = BigInt::from_bytes_be(Sign::Plus, a);
     bi.to_u64()
 }
-
 
 /// Puzzle hash
 #[derive(Default, Clone, Eq, PartialEq, Debug, Serialize, Deserialize, Hash)]
