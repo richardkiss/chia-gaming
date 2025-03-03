@@ -4,8 +4,7 @@ use clvmr::Allocator;
 
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 
-use crate::common::types::coin_id::AllocEncoder;
-use crate::common::types::error::{Error, IntoErr};
+use crate::common::types::{AllocEncoder, Error, IntoErr};
 
 #[derive(Clone, Debug)]
 pub struct Node(pub NodePtr);

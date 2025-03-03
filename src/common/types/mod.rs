@@ -1,4 +1,5 @@
 pub mod aggsig;
+pub mod alloc_encoder;
 pub mod amount;
 pub mod coin_condition;
 pub mod coin_id;
@@ -18,6 +19,7 @@ pub mod spend;
 pub mod timeout;
 
 pub use self::aggsig::*;
+pub use self::alloc_encoder::*;
 pub use self::amount::*;
 pub use self::coin_condition::*;
 pub use self::coin_id::*;

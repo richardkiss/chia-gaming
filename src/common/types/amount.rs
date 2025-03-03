@@ -4,9 +4,7 @@ use std::ops::{Add, AddAssign, Sub, SubAssign};
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
 use clvmr::allocator::NodePtr;
 
-use crate::common::types::coin_id::{atom_from_clvm, AllocEncoder};
-use crate::common::types::coin_string::u64_from_atom;
-use crate::common::types::error::Error;
+use crate::common::types::{atom_from_clvm, u64_from_atom, AllocEncoder, Error};
 
 /// Amount
 #[derive(Default, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Serialize, Deserialize)]
