@@ -3,13 +3,10 @@ use std::rc::Rc;
 
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-use clvmr::allocator::NodePtr;
 use clvm_traits::{ClvmEncoder, ToClvm, ToClvmError};
+use clvmr::allocator::NodePtr;
 
-use crate::common::types::program::Program;
-use crate::common::types::coin_id::AllocEncoder;
-use crate::common::types::error::Error;
-use crate::common::types::IntoErr;
+use crate::common::types::{AllocEncoder, Error, Program};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ProgramRef(Rc<Program>);
