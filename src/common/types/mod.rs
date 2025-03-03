@@ -1,5 +1,6 @@
 pub mod coin_condition;
 pub mod coin_id;
+pub mod amount;
 pub mod coin_string;
 pub mod divmod;
 pub mod error;
